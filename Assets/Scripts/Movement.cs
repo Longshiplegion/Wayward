@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -8,9 +6,11 @@ public class Movement : MonoBehaviour
    [SerializeField] float rotation = 100f;
    Rigidbody myRidgidBody;
     // Start is called before the first frame update
+    AudioSource myAudioSource;
     void Start()
     {
        myRidgidBody = GetComponent<Rigidbody>();
+       myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,7 +25,17 @@ public class Movement : MonoBehaviour
         
         if(Input.GetKey(KeyCode.Space))
         {
+
             myRidgidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
+            if(!myAudioSource.isPlaying)
+            {
+            myAudioSource.Play();
+            }
+
+        }
+        else 
+        {
+            myAudioSource.Stop();
         }
 
     }
