@@ -393,6 +393,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba16ce945722ca4797a44a9a30724e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LevelChangeDelay: 1
+  Crash: {fileID: 8300000, guid: 648058e49e2dd7647b519cfd7c380b47, type: 3}
+  Success: {fileID: 8300000, guid: 601fc972a28c66e488106b3806bda221, type: 3}
 --- !u!1001 &2283309770181800795
 PrefabInstance:
   m_ObjectHideFlags: 0

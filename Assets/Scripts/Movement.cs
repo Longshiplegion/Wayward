@@ -2,11 +2,18 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    //How to layer variables
+    //Parameters
+    //Cache
+    //State
    [SerializeField] float thrust = 100f;
    [SerializeField] float rotation = 100f;
+   [SerializeField] AudioClip mainEngine;
    Rigidbody myRidgidBody;
     // Start is called before the first frame update
     AudioSource myAudioSource;
+
+
     void Start()
     {
        myRidgidBody = GetComponent<Rigidbody>();
@@ -29,7 +36,7 @@ public class Movement : MonoBehaviour
             myRidgidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
             if(!myAudioSource.isPlaying)
             {
-            myAudioSource.Play();
+            myAudioSource.PlayOneShot(mainEngine);
             }
 
         }
