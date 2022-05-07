@@ -35,57 +35,80 @@ public class Movement : MonoBehaviour
         
         if(Input.GetKey(KeyCode.Space))
         {
-            
-            myRidgidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
-            if(!myAudioSource.isPlaying)
-            {
-            myAudioSource.PlayOneShot(mainEngine);
-            }
-            if(!mainBooster.isPlaying)
-            {
-               mainBooster.Play(); 
-            }
+            StartThrusting();
 
         }
-        else 
-        {
-            myAudioSource.Stop();
-            mainBooster.Stop();
-            
-        }
-
-    }
-    void ProcessRotation()
-    {
-        if(Input.GetKey(KeyCode.LeftArrow) | Input.GetKey(KeyCode.A))
-        {
-            ApplyRotation(rotation);
-            if(!leftBooster.isPlaying)
-            {
-               leftBooster.Play(); 
-            }
-            
-
-
-        }
-        else if(Input.GetKey(KeyCode.RightArrow) | Input.GetKey(KeyCode.D))
-        {
-            ApplyRotation(-rotation);
-            if(!rightBooster.isPlaying)
-            {
-               rightBooster.Play(); 
-            }
-
-
-        } 
         else
         {
-            rightBooster.Stop();
-            leftBooster.Stop();
+            StopThrusting();
+
+        }
+
+    }
+
+    void ProcessRotation()
+    {
+        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            RotateLeft();
+
+        }
+        else if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            RotateRight();
+
+        }
+        else
+        {
+            StopRotating();
         }
     }
 
-     void ApplyRotation(float rotationThisFrame)
+
+     void StartThrusting()
+    {
+        myRidgidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
+        if (!myAudioSource.isPlaying)
+        {
+            myAudioSource.PlayOneShot(mainEngine);
+        }
+        if (!mainBooster.isPlaying)
+        {
+            mainBooster.Play();
+        }
+    }
+    void StopThrusting()
+    {
+        myAudioSource.Stop();
+        mainBooster.Stop();
+    }
+
+
+
+     void RotateLeft()
+    {
+        ApplyRotation(rotation);
+        if (!leftBooster.isPlaying)
+        {
+            leftBooster.Play();
+        }
+    }
+
+     void RotateRight()
+    {
+        ApplyRotation(-rotation);
+        if (!rightBooster.isPlaying)
+        {
+            rightBooster.Play();
+        }
+    }
+     void StopRotating()
+    {
+        rightBooster.Stop();
+        leftBooster.Stop();
+    }
+
+    void ApplyRotation(float rotationThisFrame)
     {
         myRidgidBody.freezeRotation = true; // freezing rotation so we can manually rotate
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);

@@ -9,14 +9,20 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem successParticles;
     Movement MovementChange;
     AudioSource myAudioSource;
+    Rigidbody myRigidBody;
     bool isTransitioning = false;
+    bool collisionDisabled = false;
     void Start()
     {
         myAudioSource = GetComponent<AudioSource>();
     }
+    void Update()
+    {
+        DebugKeys();
+    }
     void OnCollisionEnter(Collision collision)
     {
-        if(isTransitioning){return;}
+        if(isTransitioning || collisionDisabled){return;}
 
         switch (collision.gameObject.tag) 
         {
@@ -30,6 +36,33 @@ public class CollisionHandler : MonoBehaviour
             StartCrashSequence();
             break;
         }
+    }   
+    void DebugKeys()
+    {
+        if(Input.GetKey(KeyCode.L))
+        {
+            NextLevel();
+        }
+        else if(Input.GetKey(KeyCode.C))
+        {
+            NoCollision();
+        }
+    }
+        void NextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int NextSceneIndex = currentSceneIndex+ 1;
+        if(NextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            NextSceneIndex = 0 ;
+        }
+        SceneManager.LoadScene(NextSceneIndex );
+    }
+        private void NoCollision()
+    {
+        collisionDisabled = !collisionDisabled;
+        Debug.Log(collisionDisabled);
+
     }
         void StartCrashSequence()
         {
@@ -64,14 +97,9 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex );
     }
-    void NextLevel()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int NextSceneIndex = currentSceneIndex+ 1;
-        if(NextSceneIndex == SceneManager.sceneCountInBuildSettings)
-        {
-            NextSceneIndex = 0 ;
-        }
-        SceneManager.LoadScene(NextSceneIndex );
-    }
+
+
+ 
+
+
 }
